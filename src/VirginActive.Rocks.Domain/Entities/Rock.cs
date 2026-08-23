@@ -49,6 +49,7 @@ namespace VirginActive.Rocks.Domain.Entities
 
         public void ChangeStatus(RockStatus newStatus)
         {
+            // Once a Rock leaves Pending it becomes terminal and cannot transition again.
             if (Status != RockStatus.Pending)
             {
                 throw new InvalidRockStateTransitionException(
@@ -56,6 +57,7 @@ namespace VirginActive.Rocks.Domain.Entities
                     newStatus);
             }
 
+            // The only valid transitions are Pending -> Completed and Pending -> Missed.
             if (newStatus is not RockStatus.Completed
                 and not RockStatus.Missed)
             {

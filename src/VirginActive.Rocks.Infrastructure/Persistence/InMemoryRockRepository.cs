@@ -6,6 +6,7 @@ namespace VirginActive.Rocks.Infrastructure.Persistence
 {
     public sealed class InMemoryRockRepository : IRockRepository
     {
+        // ConcurrentDictionary is used because this repository is a singleton and may be accessed by multiple requests concurrently.
         private readonly ConcurrentDictionary<Guid, Rock> _rocks = new();
 
         public Task<Rock> AddAsync(Rock rock, CancellationToken cancellationToken)

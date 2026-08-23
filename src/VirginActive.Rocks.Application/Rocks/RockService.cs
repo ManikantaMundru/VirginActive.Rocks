@@ -17,10 +17,12 @@ namespace VirginActive.Rocks.Application.Rocks
     {
         public async Task<RockDto> CreateAsync(CreateRockCommand command, CancellationToken cancellationToken)
         {
+            // Validate rules that apply to every Rock before applying category-specific business rules.
             ValidateCreateCommand(command);
 
             var validationContext = new CreateRockValidationContext(command.Title, command.DueDate, command.Note);
 
+            // Resolve category-specific validation through the Strategy pattern to keep the service open for extension.
             var strategy = strategyResolver.Resolve(command.Category);
 
             strategy.Validate(validationContext);

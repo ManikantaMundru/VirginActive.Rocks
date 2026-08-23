@@ -10,6 +10,7 @@ namespace VirginActive.Rocks.Domain.Validation.Strategies
 
         public IRockValidationStrategy Resolve(RockCategory category)
         {
+            // Strategies are registered through DI, avoiding a switch statement or any if condition that would need modification for every new category.
             if (_strategies.TryGetValue(category, out var strategy))
             {
                 return strategy;

@@ -15,8 +15,8 @@ namespace VirginActive.Rocks.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            // The repository owns the in-memory state, so it must live for the lifetime
-            // of the application. A scoped/transient repository would lose Rocks between requests.
+            // The repository owns the in-memory application state.
+            // Singleton lifetime ensures Rocks remain available across HTTP requests.
             services.AddSingleton<IRockRepository, InMemoryRockRepository>();
 
             services
