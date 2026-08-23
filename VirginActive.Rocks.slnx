@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="README..md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/VirginActive.Rocks.Api/VirginActive.Rocks.Api.csproj" />
+    <Project Path="src/VirginActive.Rocks.Application/VirginActive.Rocks.Application.csproj" />
+    <Project Path="src/VirginActive.Rocks.Domain/VirginActive.Rocks.Domain.csproj" />
+    <Project Path="src/VirginActive.Rocks.Infrastructure/VirginActive.Rocks.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/VirginActive.Rocks.IntegrationTests/VirginActive.Rocks.IntegrationTests.csproj" />
+    <Project Path="tests/VirginActive.Rocks.UnitTests/VirginActive.Rocks.UnitTests.csproj" />
+  </Folder>
+</Solution>
