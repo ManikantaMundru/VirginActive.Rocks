@@ -16,4 +16,13 @@
     <ProjectReference Include="..\VirginActive.Rocks.Infrastructure\VirginActive.Rocks.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Authentication\" />
+    <Folder Include="Contracts\Requests\" />
+    <Folder Include="Contracts\Responses\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="ErrorHandling\" />
+    <Folder Include="Middleware\" />
+  </ItemGroup>
+
 </Project>
