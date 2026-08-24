@@ -79,7 +79,8 @@ namespace VirginActive.Rocks.Api.ErrorHandling
                 Instance = context.Request.Path,
                 Extensions =
                 {
-                    ["correlationId"] = context.TraceIdentifier
+                    ["correlationId"] = context.TraceIdentifier,
+                    ["errors"] = exception.Errors
                 }
             };
         }

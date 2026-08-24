@@ -9,6 +9,7 @@ namespace VirginActive.Rocks.UnitTests.Domain.Validation
         [Fact]
         public void Resolve_WhenCategoryExists_ShouldReturnCorrectStrategy()
         {
+            // Arrange
             var strategies = new IRockValidationStrategy[]
             {
                 new HealthRockValidationStrategy(),
@@ -18,14 +19,17 @@ namespace VirginActive.Rocks.UnitTests.Domain.Validation
 
             var resolver = new RockValidationStrategyResolver(strategies);
 
+            // Act
             var result = resolver.Resolve(RockCategory.Health);
 
+            // Assert
             Assert.IsType<HealthRockValidationStrategy>(result);
         }
 
         [Fact]
         public void Resolve_WhenStrategyIsNotRegistered_ShouldThrowRockValidationException()
         {
+            // Arrange
             var strategies = new IRockValidationStrategy[]
             {
                 new HealthRockValidationStrategy()
@@ -33,8 +37,10 @@ namespace VirginActive.Rocks.UnitTests.Domain.Validation
 
             var resolver = new RockValidationStrategyResolver(strategies);
 
+            // Act
             var exception = Assert.Throws<RockValidationException>(() => resolver.Resolve(RockCategory.Revenue));
 
+            // Assert
             Assert.Contains("category", exception.Errors.Keys);
         }
     }

@@ -11,26 +11,26 @@ namespace VirginActive.Rocks.UnitTests.Domain.Validation
         [Fact]
         public void Validate_WhenNoteIsProvided_ShouldNotThrow()
         {
-            var context = new CreateRockValidationContext(
-                "Complete AI course",
-                new DateOnly(2026, 8, 30),
-                "This will improve my ai knowledge.");
+            // Arrange
+            var context = new CreateRockValidationContext("Complete AI course", new DateOnly(2026, 8, 30), "This will improve my ai knowledge.");
 
+            // Act
             var exception = Record.Exception(() => _strategy.Validate(context));
 
+            // Assert
             Assert.Null(exception);
         }
 
         [Fact]
         public void Validate_WhenNoteIsMissing_ShouldThrow()
         {
-            var context = new CreateRockValidationContext(
-                "Complete Azure certification",
-                new DateOnly(2026, 8, 30),
-                null);
+            // Arrange
+            var context = new CreateRockValidationContext("Complete AI course", new DateOnly(2026, 8, 30), null);
 
+            // Act
             var exception = Assert.Throws<RockValidationException>(() => _strategy.Validate(context));
 
+            // Assert
             Assert.Contains("note", exception.Errors.Keys);
         }
     }

@@ -10,13 +10,13 @@ namespace VirginActive.Rocks.UnitTests.Domain.Validation
         [Fact]
         public void Validate_ShouldNotApplyAnyAdditionalValidation()
         {
-            var context = new CreateRockValidationContext(
-                "test title",
-                new DateOnly(2026, 8, 30),
-                null);
+            // Arrange
+            var context = new CreateRockValidationContext("test title", new DateOnly(2026, 8, 30), null);
 
+            // Act
             var exception = Record.Exception(() => _strategy.Validate(context));
 
+            // Assert
             Assert.Null(exception);
         }
     }

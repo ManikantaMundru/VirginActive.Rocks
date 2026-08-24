@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using VirginActive.Rocks.Api.Contracts.Requests;
 using VirginActive.Rocks.Api.Contracts.Responses;
 using VirginActive.Rocks.Domain.Enums;
@@ -116,6 +115,38 @@ namespace VirginActive.Rocks.IntegrationTests
 
             // Assert
             Assert.Equal(HttpStatusCode.UnprocessableEntity, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task CreateRock_WhenTitleIsEmpty_ShouldReturnValidationProblemDetails()
+        {
+            // Arrange
+            var memberId = Guid.NewGuid().ToString();
+            var request = new CreateRockRequest(" ", RockCategory.Other, DateOnly.FromDateTime(DateTime.UtcNow.AddDays(7)), null);
+
+            // Act
+            var response = await _client.PostAsJsonAsync($"/members/{memberId}/rocks", request);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            using var document = JsonDocument.Parse(content);
+
+            var root = document.RootElement;
+
+            Assert.Equal(400, root.GetProperty("status").GetInt32());
+            Assert.Equal("One or more validation errors occurred.", root.GetProperty("title").GetString());
+            Assert.Equal($"/members/{memberId}/rocks", root.GetProperty("instance").GetString());
+
+            var errors = root.GetProperty("errors");
+
+            Assert.True(errors.TryGetProperty("title", out var titleErrors));
+            Assert.Equal("Title must not be empty or whitespace.", titleErrors[0].GetString());
+
+            Assert.True(root.TryGetProperty("correlationId", out var correlationId));
+            Assert.False(string.IsNullOrWhiteSpace(correlationId.GetString()));
         }
     }
 }
