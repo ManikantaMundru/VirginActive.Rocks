@@ -40,6 +40,9 @@ builder.Services
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
+// Health checks for liveness and readiness probes.
+builder.Services.AddHealthChecks();
+
 // API key authentication.
 builder.Services
     .AddAuthentication(options =>
@@ -105,7 +108,7 @@ app.UseHttpsRedirection();
 // Authentication must run before authorization.
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.MapHealthChecks("/health").AllowAnonymous();
 app.MapControllers();
 
 app.Run();

@@ -4,7 +4,7 @@ A .NET 10 Web API for managing weekly member commitments ("Rocks") and enriching
 
 The solution focuses on API design, validation, resilience, observability, security, and maintainability.
 
-## Technology
+## Technology and NuGet Packages
 
 - .NET 10
 - C# 14
@@ -14,12 +14,6 @@ The solution focuses on API design, validation, resilience, observability, secur
 - Microsoft.Extensions.Http.Resilience / Polly
 - In-memory persistence
 - Swagger / OpenAPI
-
-## Technology and NuGet Packages
-
--   .NET 10 / C# 14
--   ASP.NET Core Web API
--   In-memory persistence
 
 NuGet packages used by the solution include:
 
@@ -108,6 +102,18 @@ X-Api-Key: rocks-local-development-key
 
 The following examples assume the local HTTP profile is running on
 `http://localhost:5262`.
+
+A Postman collection is included for manual API testing:
+
+`postman/VirginActive.Rocks.PostmanCollection.json`
+
+Import the collection into Postman and configure the collection variables:
+
+- `baseUrl` - defaults to `https://localhost:7073`
+- `apiKey` - your locally configured API key
+- `memberId` - defaults to `1` for testing only
+
+The Create Rock request automatically stores the returned Rock ID for subsequent status update requests.
 
 ### Create a Rock
 
@@ -280,6 +286,14 @@ The resilience configuration includes:
 
 The external API base URL and timeout are configuration-driven.
 
+### Health Check
+
+A lightweight health endpoint is available for deployment and monitoring probes:
+
+`GET /health`
+
+The endpoint does not require API-key authentication.
+
 ## Category Validation Strategy - Requirement 3
 
 Category-specific validation uses the Strategy Pattern through
@@ -386,15 +400,23 @@ staged deployment approach to reduce deployment risk.
 
 Given more time, I would consider:
 
--   Durable database persistence.
+-   Database persistence.
 -   OpenTelemetry and Azure Application Insights.
--   Health/readiness checks.
 -   API versioning.
 -   Rate limiting.
 -   Additional integration and external API contract tests.
 -   Bicep infrastructure definitions and a working CI/CD pipeline.
--   More advanced secret rotation and API consumer management.
+-   Docker Support
 
 These were intentionally kept outside the assessment scope to prioritize
 the requested behaviour, code quality and production-oriented design
 decisions.
+
+## AI Usage
+
+AI-assisted development tools were used during this assessment for:
+
+- Assisting with boilerplate and repetitive code, particularly test setup, to reduce time spent on repetitive implementation and allow more focus on the core requirements.
+- Structuring and refining the README for clarity and readability, to ensure the implementation and design decisions are communicated clearly. This is purely to fix my english writing skill. 
+- I used an existing Clean Architecture project creation script which was generated using AI to generate the initial solution and project structure. This is a personal development utility I use to avoid repetitive project setup. The assessment-specific implementation and configuration were added separately.
+

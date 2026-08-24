@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/postman/">
+    <File Path="VirginActive.Rocks.PostmanCollection.json" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path="README.md" />
   </Folder>
